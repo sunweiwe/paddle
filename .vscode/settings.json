@@ -1,5 +1,8 @@
 {
   "cSpell.words": [
-    "logrus"
+    "gorm",
+    "kubeconfig",
+    "logrus",
+    "ormhook"
   ]
 }

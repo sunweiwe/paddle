@@ -1,10 +1,14 @@
 package cmd
 
 import (
+	"encoding/json"
 	"flag"
 	"os"
 
 	"github.com/sirupsen/logrus"
+	"github.com/sunweiwe/paddle/core/config"
+	"github.com/sunweiwe/paddle/lib/orm"
+	ormhook "github.com/sunweiwe/paddle/pkg/util/ormHook"
 )
 
 // Flags defines agent CLI flags.
@@ -41,6 +45,32 @@ func ParseFlags() *Flags {
 
 func Run(flags *Flags) {
 	InitLog(flags)
+
+	coreConfig, err := config.LoadConfig(flags.ConfigFile)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = json.MarshalIndent(coreConfig, "", " ")
+	if err != nil {
+		panic(err)
+	}
+
+	// init database
+	mysqlDB, err := orm.NewMySQL(&orm.MySQL{
+		Host:             coreConfig.DBConfig.Host,
+		Port:             coreConfig.DBConfig.Port,
+		Username:         coreConfig.DBConfig.Username,
+		Password:         coreConfig.DBConfig.Password,
+		Database:         coreConfig.DBConfig.Database,
+		PrometheusEnable: coreConfig.DBConfig.PrometheusEnabled,
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	ormhook.RegisterCustomHooks(mysqlDB)
+
 }
 
 func InitLog(flags *Flags) {

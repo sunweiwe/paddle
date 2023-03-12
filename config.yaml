@@ -1,0 +1,34 @@
+serverConfig:
+  port: 8080
+dbConfig:
+  host: ''
+  port: 3306
+  username: root
+  password: 3er4#ER$
+  database: 'paddle'
+  prometheusEnabled: true
+kubeconfig: ''
+sessionConfig:
+  maxAge: 43200
+redisConfig:
+  protocol: tcp
+  address: ''
+  password: ''
+  db: 1
+grafanaConfig:
+  host: http://localhost:3000
+  namespace: horizon
+  dashboards:
+    # label that the configmaps with dashboards are marked with
+    labelKey: grafana_dashboard
+    # value of label that the configmaps with dashboards are set to
+    labelValue: '1'
+  syncDatasourceConfig:
+    period: 2m
+    # label that the configmaps with datasource are marked with
+    labelKey: grafana_datasource
+    # value of label that the configmaps with datasource are set to
+    labelValue: '1'
+tokenConfig:
+  jwtSigningKey: ''
+  callbackTokenExpireIn: 24h
