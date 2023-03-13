@@ -3,6 +3,9 @@
     "gorm",
     "kubeconfig",
     "logrus",
-    "ormhook"
+    "ormhook",
+    "redisstore",
+    "requestid",
+    "rpcerror"
   ]
 }
